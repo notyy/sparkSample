@@ -22,9 +22,9 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.11" % "test",
   "com.h2database" % "h2" % "1.3.176",
   "org.mockito" % "mockito-all" % "1.9.5" % "test",
+  "org.apache.spark" %% "spark-core" % "1.0.2" % "provided,test",
   "org.scalanlp" %% "breeze" % "0.9",
-  "org.scalanlp" %% "breeze-viz" % "0.8",
-  "org.apache.spark" %% "spark-core" % "1.0.2" % "provided"
+  "org.scalanlp" %% "breeze-viz" % "0.8"
 )
 
 testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
