@@ -10,12 +10,7 @@ version := "0.0.1"
 organization := "com.github.notyy"
 
 // set the Scala version used for the project
-scalaVersion := "2.11.2"
-
-resolvers ++= Seq(
-  "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",
-  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-)
+scalaVersion := "2.10.4"
 
 libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.11.5" % "test,it,ft",
@@ -28,7 +23,8 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % "1.3.176",
   "org.mockito" % "mockito-all" % "1.9.5" % "test",
   "org.scalanlp" %% "breeze" % "0.9",
-  "org.scalanlp" %% "breeze-viz" % "0.8"
+  "org.scalanlp" %% "breeze-viz" % "0.8",
+  "org.apache.spark" %% "spark-core" % "1.0.2" % "provided"
 )
 
 testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
