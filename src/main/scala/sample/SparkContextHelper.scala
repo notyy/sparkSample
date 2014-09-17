@@ -3,24 +3,24 @@ package sample
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.apache.spark.{SparkConf, SparkContext}
 
-trait SparkContextHelper extends LazyLogging {
+trait SparkContextHelper extends Serializable {
 
   def withSparkContext[T](sparkConf: SparkConf)(f: SparkContext => T): T = {
-    logger.info("starting spark context")
+    println("starting spark context")
     val sc = new SparkContext(sparkConf)
-    logger.info("spark context started")
+    println("spark context started")
     try {
-      logger.info("calling function on spark context")
+      println("calling function on spark context")
       val rs = f(sc)
-      logger.info("function completed")
+      println("function completed")
       rs
-    }finally {
-      logger.info("stopping spark context")
+    } finally {
+      println("stopping spark context")
       sc.stop()
-      logger.info("spark context stopped")
+      println("spark context stopped")
     }
   }
 
   def withLocalSparkContext[T](appName: String) = withSparkContext[T](
-    new SparkConf().setAppName(appName).setMaster("local").set("spark.ui.port","4041")) _
+    new SparkConf().setAppName(appName).setMaster("local").set("spark.ui.port", "4041")) _
 }
