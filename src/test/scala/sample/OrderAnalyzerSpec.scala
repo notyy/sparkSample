@@ -19,7 +19,7 @@ class OrderAnalyzerSpec extends FunSpec with ShouldMatchers with SparkContextHel
   }
 
   describe("OrderAnalyzer") {
-    it("can reproduce orders as is") {
+    it("can analyze order count and output to text file") {
       withLocalSparkContext("OrderAnalyzerSpec") { sc =>
         new OrderAnalyzer {}.analyzeOrderCount(sc, "src/test/resources/order.csv", outputPath)
       }
