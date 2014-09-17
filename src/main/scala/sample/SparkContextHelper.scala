@@ -20,4 +20,7 @@ trait SparkContextHelper extends LazyLogging {
       logger.info("spark context stopped")
     }
   }
+
+  def withLocalSparkContext[T](appName: String) = withSparkContext[T](
+    new SparkConf().setAppName(appName).setMaster("local").set("spark.ui.port","4041")) _
 }
