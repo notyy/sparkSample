@@ -3,7 +3,7 @@ package sample
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
-trait OrderAnalyzer extends Serializable{
+trait OrderAnalyzer extends Serializable {
 
   def analyzeOrderCount(sc: SparkContext, inputPath: String, outputPath: String): Unit = {
     doAnalyzeOrderCount(sc.textFile(inputPath)).saveAsTextFile(outputPath)
@@ -11,11 +11,10 @@ trait OrderAnalyzer extends Serializable{
 
   def echo(src: RDD[String]): RDD[String] = src
 
-  private def nameIs(name: String)(line: String): Boolean = line.split(",")(1) == name
-
   def doAnalyzeOrderCount(src: RDD[String]): RDD[String] = {
     src.groupBy(_.split(",")(0)).map {
       case (date, vs) => {
+        def nameIs(name: String)(line: String): Boolean = line.split(",")(1) == name
         def total: Int = vs.size
         def totalByUser(userName: String): Int = vs.count(nameIs(userName))
 
