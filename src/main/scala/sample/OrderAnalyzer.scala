@@ -9,8 +9,6 @@ trait OrderAnalyzer extends Serializable {
     doAnalyzeOrderCount(sc.textFile(inputPath)).saveAsTextFile(outputPath)
   }
 
-  def echo(src: RDD[String]): RDD[String] = src
-
   def doAnalyzeOrderCount(src: RDD[String]): RDD[String] = {
     src.groupBy(_.split(",")(0)).map {
       case (date, vs) => {
