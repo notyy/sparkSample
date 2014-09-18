@@ -14,11 +14,13 @@ trait OrderAnalyzer extends Serializable{
   private def nameIs(name: String)(line: String): Boolean = line.split(",")(1) == name
 
   def doAnalyzeOrderCount(src: RDD[String]): RDD[String] = {
-    def total(vs: Iterable[String]): Int = vs.size
-    def totalByUser(vs:Iterable[String], userName: String): Int = vs.count(nameIs(userName))
-
     src.groupBy(_.split(",")(0)).map {
-      case (date, vs) => s"$date,${total(vs)},${totalByUser(vs,"xx")},${totalByUser(vs,"yy")}"
+      case (date, vs) => {
+        def total: Int = vs.size
+        def totalByUser(userName: String): Int = vs.count(nameIs(userName))
+
+        s"$date,$total,${totalByUser("xx")},${totalByUser("yy")}"
+      }
     }
   }
 }
