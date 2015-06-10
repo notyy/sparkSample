@@ -37,7 +37,7 @@ class OrderAnalyzerSpec extends FunSpec with ShouldMatchers with SparkContextHel
 
         val srcRDD = sc.parallelize(src.lines.toSeq)
         val rs = new OrderAnalyzer {}.doAnalyzeOrderCount(srcRDD).collect()
-        rs.size shouldBe 2
+        rs.length shouldBe 2
         rs(0) shouldBe "2014-01-06,3,2,1"
         rs(1) shouldBe "2014-02-08,2,1,1"
       }

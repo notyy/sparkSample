@@ -26,7 +26,7 @@ object OrderAnalyzerApp extends SparkAppBootstrap with SparkAppConfProvider with
   override def appName: String = "OrderAnalyzer"
 
   override def doMain(sc: SparkContext, args: Array[String]): Unit = {
-    if (args.size < 2) {
+    if (args.length < 2) {
       println("not enough parameter")
       println("inputPath and outputPath required")
     } else {
