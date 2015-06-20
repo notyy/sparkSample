@@ -23,8 +23,9 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.11" % "test",
   "com.h2database" % "h2" % "1.3.176",
   "org.mockito" % "mockito-all" % "1.9.5" % "test",
-  "org.apache.spark" %% "spark-core" % "1.3.1" % "provided,test",
-  "org.apache.spark" %% "spark-sql" % "1.3.1" % "provided,test",
+  "org.apache.spark" %% "spark-network-common" % "1.4.0",
+  "org.apache.spark" %% "spark-core" % "1.4.0" % "provided,test",
+  "org.apache.spark" %% "spark-sql" % "1.4.0" % "provided,test",
   "org.scalanlp" %% "breeze" % "0.9",
   "org.scalanlp" %% "breeze-viz" % "0.8"
 )
