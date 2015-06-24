@@ -34,7 +34,9 @@ class OlympicCalcSpec extends FunSpec with ShouldMatchers with SparkContextHelpe
     it("can find the year in which USA scored most medals"){
       withLocalSparkContext("OlymicCalc"){ sc =>
         val olympicsRDD = sc.textFile(olympicFilePath)
-        findMostMedalsYear4USA(olympicsRDD) shouldBe "2008"
+        val sqlContext = new SQLContext(sc)
+        val olympicsDF = sqlContext.read.parquet("src/test/resources/olympicParqet")
+        findMostMedalsYear4USA(olympicsDF,sqlContext) shouldBe "2008"
       }
     }
 

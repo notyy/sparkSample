@@ -4,6 +4,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{SQLContext, DataFrame}
 
 import scala.reflect.internal.util.TableDef.Column
+import org.apache.spark.sql.functions._
 
 case class Olympic(player: String, country: String,year: String,
                    sport: String,bronze: Int, siver: Int, gold: Int, total: Int)
@@ -15,14 +16,23 @@ trait OlympicCalc {
   type Player = String
   type Sport = String
 
-  def findMostMedalsYear4USA: RDD[String] => String = rdd => {
-    toYearMedalPair(rdd, "United States").
-      sortBy(_._2, ascending = false).map(_._1).first()
+  def findMostMedalsYear4USA: (DataFrame,SQLContext) => String = (df,sc) => {
+//    toYearMedalPair(rdd, "United States").
+//      sortBy(_._2, ascending = false).map(_._1).first()
+    import sc.implicits._
+    toYearMedalPairDF(df,"United States",sc).orderBy($"total".desc).first().getAs[String]("year")
   }
 
   def toYearMedalPair(rdd: RDD[String], country: CountryName): RDD[(Year, MedalCount)] = {
     rdd.map(_.split(",")).filter(_(1) == country).
       map(a => (a(2), a(7).toInt)).reduceByKey(_ + _)
+  }
+
+  def toYearMedalPairDF(dataFrame: DataFrame, country: CountryName, sqlContext: SQLContext): DataFrame = {
+    import sqlContext.implicits._
+
+    dataFrame.filter($"country" === country).
+      select("year","total").groupBy("year").agg(sum("total") as "total")
   }
 
   def findCountryHavingMostMedals: RDD[String] => (CountryName, MedalCount) = rdd => {
